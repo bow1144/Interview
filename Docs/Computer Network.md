@@ -44,3 +44,24 @@
 * 递归查询适用于普通用户和客户端，客户端只发送一个请求
 * 迭代查询适用于DNS服务器之间的通信，一个一个向更高级服务器查询
 
+## HTTP特性与简述
+
+### 简述
+* web上的通信都是建立在HTTP协议之上
+* www构建技术
+  * HTML(*HyperText Markup Language*)
+  * HTTP(*HyprtText Transfer Protocol*)
+  * URL(*Uniform Resource Location*)
+
+### 版本迭代
+1. HTTP/1.0
+2. HTTP/1.1
+3. HTTP/2.0
+
+### 特性
+1. 简单，易于理解
+2. 灵活，易于扩展
+3. 无状态，明文传输，不安全
+   * 无状态：服务器不保存HTTP的状态，解决方式*cookie*
+   * 明文传输：容易被窃取
+   * 不安全：可以用HTTPS的方式解决：引入SSL/TLS层

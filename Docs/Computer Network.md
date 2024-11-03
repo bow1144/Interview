@@ -69,6 +69,8 @@
 
 ## HTTP版本迭代
 
+![HTTP各版本](image/HTTP各版本.png)
+
 ![HTTP版本迭代](image/HTTP版本迭代.png)
 
 ## HTTP缓存

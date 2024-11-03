@@ -65,3 +65,8 @@
    * 无状态：服务器不保存HTTP的状态，解决方式*cookie*
    * 明文传输：容易被窃取
    * 不安全：可以用HTTPS的方式解决：引入SSL/TLS层
+
+
+## HTTP版本迭代
+
+![HTTP版本迭代](image/HTTP版本迭代.png)

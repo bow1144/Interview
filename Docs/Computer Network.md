@@ -69,9 +69,9 @@
 
 ## HTTP版本迭代
 
-![HTTP各版本](image/HTTP各版本.png)
-
 ![HTTP版本迭代](image/HTTP版本迭代.png)
+
+![HTTP各版本](image/HTTP各版本.png)
 
 ## HTTP缓存
 * 对于已经请求过的资源，客户端或服务器会保存在本地。HTTP缓存分为强制缓存和协商缓存
@@ -287,3 +287,76 @@ TCP头部有一个字段*window*，是接收端告诉发送端还有多少缓冲
 
 ### 程序如何表示发送方的四个部分
 <img width="547" alt="{BFFE1487-B700-4068-8095-663B5BAF6EF8}" src="https://github.com/user-attachments/assets/ced60a30-75e7-43c6-bb0b-a632f0664397">
+
+## TCP的流量控制机制
+**基本原理**：滑动窗口机制，接收方可以通过调整窗口大小告诉发送方当前数据处理能力
+
+* **发送速率调整**：发送方通过接收方通告的窗口大小调整发送速率
+* **动态调整**：如果网络拥塞或接收方处理速度变慢，流量发送速率减小
+
+## TCP的拥塞控制机制
+网络拥塞时，如果发送方继续发送数据包，会导致时延，丢包等。TCP重传数据会导致负担更重，拥塞控制是避免发送方的数据填满网络。拥塞控制通过**拥塞窗口**防止过多数据注入网络。
+
+* 拥塞窗口`cwnd`是发送方维护的状态变量，由网络拥塞程度变化。。拥塞程度越大，`cwnd`减小
+* 发送窗口的值是`swnd = min(cwnd, rwnd)`，拥塞窗口与接收窗口的最小值
+
+拥塞控制常见算法：慢启动，拥塞避免，拥塞发生，快速恢复
+
+### 1. 慢启动
+* 发送方每收到一个ACK，拥塞窗口`cwnd`大小**翻倍**
+* 慢启动有一个门槛`ssthresh`，`cwnd >= ssthresh`时使用_拥塞避免算法_
+
+### 2. 拥塞避免
+* 一般`ssthresh`的大小为65536字节，超过后进入拥塞避免
+* 每收到一个ACK，`cwnd += 1/cwnd`，变成线性增长
+
+### 3. 拥塞发生
+
+#### （1）超时重传的拥塞发生算法
+1. `ssthresh = cwnd/2`
+2. `cwnd = 1`
+3. 重新开始慢启动。方式激进，容易造成卡顿
+
+#### （2）快速重传的拥塞发生算法
+TCP认为这种情况不严重，因为没有全丢  
+1. `cwnd /= 2`
+2. `ssthresh = cwnd`
+3. 进入快速恢复算法
+
+### 4. 快速恢复
+1. `cwnd = ssthresh + 3` （有三个数据包被收到了）
+2. 重传丢失数据包
+3. 若再收到重复ACK，`cwnd ++`
+4. 若收到新数据ACK，`cwnd = ssthresh` ,恢复
+
+<img width="600" alt="{快速恢复}" src="https://github.com/user-attachments/assets/8f7a0e96-1083-438f-82e8-5330c9b294db">
+
+## IP网络层基础
+
+### IP基础
+![IP基础](https://github.com/user-attachments/assets/e24ea340-aa80-4a9a-8b1d-6f1556a38822)
+
+* 网络层的主要作用：主机与主机之间点对点通信
+* 网络层（IP）与数据链路层（MAC）的关系：IP负责没有直连的主机间通信，MAC负责直连设备的通信
+
+### IP地址
+
+<img width="413" alt="{F733A0C2-809C-41CB-9749-7251287BD9A1}" src="https://github.com/user-attachments/assets/099e071c-bc8f-4c44-9c2f-685c935dc6f5">
+
+实际上43亿给IP地址时远远不够用的，但是可以通过**更换IP地址的技术NAT**，使得连接计算机数超过43亿
+
+IP地址被分为ABCDE五类
+
+#### （1）A、B、C类地址
+
+<img width="391" alt="{0131086B-99EB-4ECD-8276-C9516849E7EA}" src="https://github.com/user-attachments/assets/e40d7c40-7b07-4091-ac0d-c3a8d8db9202">
+
+* IP地址被分为**分类号、网络号、主机号**。ABC三类各个号的长度不同
+* 广播被分为**本地关闭**和**直接广播**。本地广播只分享本链路，直接广播可以分享给其它网络
+
+#### （2）D、E类广播
+
+<img width="543" alt="{9C555DA1-BF7C-460E-87AA-EA0C1EA479A3}" src="https://github.com/user-attachments/assets/d6ecde3f-5d9e-4fb1-b2d3-d137251d994c">
+
+<img width="534" alt="{95038242-B8F8-49E8-A2F2-21FA5FCB0955}" src="https://github.com/user-attachments/assets/0a08860b-cade-4c28-a299-33900e71043f">
+

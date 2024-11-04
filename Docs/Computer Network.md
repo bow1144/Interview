@@ -156,3 +156,46 @@
 
 ### HTTPS是如何建立的
 <img width="467" alt="{2C27C4DF-D424-401A-87FB-6220946CB319}" src="https://github.com/user-attachments/assets/3d236a14-beaf-4f61-8e4e-2a033998cd14">
+
+## TCP与UDP的头部格式
+
+### UDP
+<img width="362" alt="{9B826464-147D-4210-A378-7B2DB3BA87A0}" src="https://github.com/user-attachments/assets/d9ad06b9-d351-4753-a959-85ff1e0c39ac">
+
+* 端口：UDP应发送给哪个进程
+* 包长度：头部与数据长度之和
+* 校验和：校验是否出现差错
+
+### TCP
+<img width="361" alt="{6C69F95F-E965-4877-806B-4717401306BA}" src="https://github.com/user-attachments/assets/abd1ae2b-3731-46cd-ad6f-1a1e83a9c458">
+
+* 序列号：解决网络包乱序问题
+* 确认应答号：解决丢包问题；序列号和确认应答号用于实现可靠数据传输
+* 首部长度：TCP头部字节长度
+* 窗口大小：告诉本端TCP缓冲区还有多少空间接收，用以控制流量
+* **标志字段**
+  * ACK：是否成功接收报文段确认
+  * RST：重置混乱连接，或拒绝无效连接
+  * SYN：请求建立连接
+  * FIN：断开连接
+* **TCP选项**：可变长度，最长40字节
+  * 第一个字段*kind*说明选项类型
+  * 第二个字段*length*说明选项总长度
+  * 第三个字段*info*是选项具体信息
+  
+## TCP的三次握手
+
+### 三次握手的过程
+
+<img width="390" alt="{8F054089-2AE5-4A00-9BCC-AA70F41A8545}" src="https://github.com/user-attachments/assets/a277e117-08ec-4da2-85be-8bd4d319fd20">
+
+#### 第一次握手：SYN报文
+客户端随机初始化序列号`client_isn`，放入TCP**序列号**，并将SYN设置为1，表示发起连接。之后客户端处于`SYN-SENT`状态
+
+#### 第二次握手：SYN+ACK报文
+服务端在收到SYN报文后，将自己的随机初始化序列号`server-isn`放入TCP**序列号**，并在**确认应答号**填入`client_isn+1`，将SYN与ACK置为1，并将SYN+ACK发送给客户端，进入`SYN-RCVD`状态，表示服务器接收客户端请求，希望建立连接
+
+#### 第三次握手：ACK报文
+客户端将ACK标志设置为1，在**确认应答号**填入`server-isn+1`，将报文发送给服务端。**这次可以携带数据**，之后客户端处于`ESTABLISHED`状态，表示客户端准备与服务器进行数据传输
+
+### 为什么需要三次握手

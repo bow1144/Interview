@@ -473,3 +473,15 @@ IP地址被分为ABCDE五类
    * 转换表消耗资源
    * 如果NAT重启，所有TCP都要被重置
 * NAT穿透：应用程序发现自己位于NAT后，主动获得NAT公有IP，为自己建立端口映射条目
+
+### 4. ICMP互联网控制报文协议
+* ICPM *Internet Control Message Protocol*
+* 主要功能包括确认IP包是否达到目标地址，IP包废弃原因，改善网络设置
+
+<img width="448" alt="{F8B08EFA-779C-49C1-AD3D-830F1A6390DC}" src="https://github.com/user-attachments/assets/6a03df2c-22bd-453d-bc27-3060c77fad7b">
+
+* ICPM目前分为两类
+  1. 用于诊断查询消息的*查询报文类型*
+  2. 通知出错原因*差错报文类型*
+ 
+### 5. IGMP因特网组管理协议 

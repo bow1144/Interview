@@ -413,3 +413,63 @@ IP地址被分为ABCDE五类
 <img width="564" alt="{801301E0-E6B8-420D-B62D-8D0EC66D096B}" src="https://github.com/user-attachments/assets/a4cb582d-ef4c-46c5-b51a-ba21d69a8a8e">
 
 #### 3. 地址结构
+
+<img width="390" alt="{C2181F75-A667-48AA-872D-671AA18BF79A}" src="https://github.com/user-attachments/assets/195df831-7ee6-40e3-82bd-51d14d50c95d">
+
+* 相比于IPV4，IPV6新增在子网下新增了**链路**
+* 在同一链路单播通信，可以不经过路由器，直接在本地单播地址，这是IPv4所没有的
+* 在内网单播，相当于IPv4的私有IP
+* 在互联网通信，相对于IPv4的公有IP
+
+### IPv4首部与IPv6首部
+<img width="500" alt="{EE486C22-C315-4A4A-AE78-C94E347A456B}" src="https://github.com/user-attachments/assets/06d50e11-60c0-4b9a-99ce-a21d2c95b3db">
+
+<img width="500" alt="{7A09CC37-7DE0-489F-BBB1-A2AA186F18A8}" src="https://github.com/user-attachments/assets/e5c42eb3-a12b-4129-93ad-b2dc335513c1">
+
+<img width="393" alt="{4FC97D20-1B6E-4DD0-A31A-60F238C0A2B9}" src="https://github.com/user-attachments/assets/55482fd7-b25d-4390-8281-5aa256091702">
+
+#### 不同之处
+1. **取消首部检验和**：因为在数据链路层与传输层都会检验，故IPv6取消了IP的校验
+2. **取消分片/重组相关字段**：IPv6不允许路由器分片重组，这种操作只在源与目标主机。这样提升传输效率
+3. **取消选项字段**：选项出现在IP六的*下一个首部*指出的位置上。因此IPv6的首部长度成为**固定的40字节**
+
+## IP协议
+
+### 1. ARP与RARP协议
+
+#### （1）ARP协议
+* ARP协议，即 *Address Resolution Protocol 地址解析协议*
+* 作用是通过下一跳的**IP地址求得MAC地址**，从网络层到数据链路层
+* 原理是ARP请求与ARP响应
+  1. 主机广播ARP请求，包中包含了目标IP
+  2. 一个链路中所有设备拆包，如果包中目标IP与自己的IP一致，将自己的MAC地址返回给主机
+  3. 操作系统会把第一次ARP获取的MAC地址缓存（有期限），便于下次直接找MAC地址
+ 
+#### （2）RARP协议
+* 与ARP协议相反，已知MAC地址求IP地址
+* 小型嵌入式设备接入网络时使用。设备通过RARP服务器注册MAC与IP地址
+
+### 2. DHCP协议
+* DHCP协议，即 *Dynamic Host Configuration Protocol 动态主机配置协议*
+* 电脑通过DHCP动态获取IP地址，省去了配置IP信息繁琐的过程
+
+1. 客户端发起**DHCP发现报文**的IP数据报，使用**UDP广播**，目的地址是`255.255.255.255`并使用`0.0.0.0`作为源IP地址。链路将帧广播到所有网络中设备
+2. DHCP服务器收到报文后，用**DHCP提供报文**做出响应，仍使用`255.255.255.255`.该报文信息暴扣IP地址，子网掩码，默认网关，DNS服务器以及**IP地址租用期**
+3. 客户端收到一个或多个报文后，从中选择一个服务器发送**DHCP请求报文**，回显配置参数
+4. 最后，都无端响应，应答要求的参数
+
+* 如何续约IP地址：客户端向服务器发送DHCP请求报文
+* 每个网络都要配置一个DHCP服务器？：用DHCP中继代理。收到DHCP广播后用**中继单播**向上发送给服务器
+
+### 3. NAT网络地址转换
+* NAT协议，即 *Network Address Translation 网络地址转换*
+* 作用是将私有IP地址转换为公有IP，缓解IPv4地址数量少的问题
+* 原理：将私有IP网络的数个IP地址压缩为**一个公用IP地址的不同port**
+
+<img width="551" alt="{41505BAF-2F2B-40DA-B427-DA1D8DB4E341}" src="https://github.com/user-attachments/assets/b35d32e5-8d45-4ba5-b51c-4e8312841e93">
+
+* 缺点
+   * 外部无法与NAtions内部服务器建立连接
+   * 转换表消耗资源
+   * 如果NAT重启，所有TCP都要被重置
+* NAT穿透：应用程序发现自己位于NAT后，主动获得NAT公有IP，为自己建立端口映射条目

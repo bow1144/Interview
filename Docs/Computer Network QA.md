@@ -225,6 +225,7 @@ HTTP的是由应用层实现，被称为HTTP长连接；TCP的是由TCP层实现
 * 并行下载：用户可以在一个连接下下载多个资源
 
 ### Cookie和Session是什么？
+产生原因：HTTP服务器无法直接记住用户状态  
 1. Cookie：
    * Cookie是存储在用户浏览器中的小型文本文件，用于在用户和服务器之间传输数据
    * 通常服务器向客户端发送Cookie，浏览器将其存储在本地
@@ -239,3 +240,4 @@ HTTP的是由应用层实现，被称为HTTP长连接；TCP的是由TCP层实现
 <img width="516" alt="{6C1875C4-CD1B-48EC-BCE3-229866E6CDCC}" src="https://github.com/user-attachments/assets/15ea4e82-4b87-44b7-8c76-8e808c0c9e44">
 
 ### Session的工作原理
+用户首次访问服务器时，服务器生成一个唯一的`Session ID`，这个ID关联客户端与服务器端的信息。`Session ID`在客户端以`Cookie`的形式储存，每次请求都附带到服务器中，服务器通过该ID获取用户状态

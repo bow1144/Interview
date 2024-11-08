@@ -233,3 +233,9 @@ HTTP的是由应用层实现，被称为HTTP长连接；TCP的是由TCP层实现
    * 客户端浏览器访问服务器时，服务器将**客户端信息**记录在服务器上。这些信息是Session
    * Session的主要作用是维护用户登录状态，临时用户信息和上下文
  
+### Cookie的工作原理
+如果服务器需要`Cookie`，在HTTP响应中设置`Set-Cookie`标头；浏览器将这些`Cookie`存储并在后续的请求中发送给服务器。这样服务器可以通过`Cookie`实现用户状态管理与传递
+
+<img width="516" alt="{6C1875C4-CD1B-48EC-BCE3-229866E6CDCC}" src="https://github.com/user-attachments/assets/15ea4e82-4b87-44b7-8c76-8e808c0c9e44">
+
+### Session的工作原理

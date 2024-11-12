@@ -299,3 +299,10 @@ Socket通信是一种网络编程中常见的通信方式，也可以在同一�
 
 ### 5. 管程
 管程是实现互斥与同步的一种高级机制，它通过封装共享资源和操作方法，确保资源的安全访问，避免了数据竞争和死锁问题，适合用于多线程编程中需要清晰、易维护的同步控制场景。
+
+## 存储系统
+![存储系统](https://github.com/user-attachments/assets/b519c6ac-7122-4a50-82ed-d679044b1395)
+
+### 存储系统层级
+
+<img width="451" alt="{21F65122-AD45-497A-89FD-82BB447A59BA}" src="https://github.com/user-attachments/assets/b00989a6-2f11-4a13-87d6-3167de9f359b">

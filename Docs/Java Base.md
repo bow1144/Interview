@@ -273,3 +273,60 @@ public final void wait() throws InterruptedException
  */
 protected void finalize() throws Throwable { }
 ```
+
+### 7.2 ==与equals()的区别
+* 对于基本数据类型，`==`比较的是值
+* 对于引用数据类型，`==`比较的是内存地址
+* `equals()`不能比较基本数据类型，只能判断两个对象是否相等
+
+```
+String a = new String("ab"); // a 为一个引用
+String b = new String("ab"); // b为另一个引用,对象的内容一样
+String aa = "ab"; // 放在常量池中
+String bb = "ab"; // 从常量池中查找
+System.out.println(aa == bb);// true     // 二者地址相同
+System.out.println(a == b);// false      // 二者地址不同
+System.out.println(a.equals(b));// true
+System.out.println(42 == 42.0);// true
+```
+
+### 7.3 hashcode() 有什么用
+获取哈希码，确定对象在哈希表中的索引位置；作用和`equals()`类似，用于比较两个对象是否相等
+
+### 7.4 为什么要有hashcode和equals两种方法？
+* 两个对象`hashcode`不相等，可以认为两个对象不相等
+* 两个对象`hashcode`相等，对象不一定相等（哈希碰撞）
+* 两个对象`hashcode`和`equals`都相等，我们才认为两个对象相等
+
+### 7.5 为什么重写equals()必须重写hashcode()？
+如果没有重写hashcode，会导致equals()判断相等而hashcode()判断不相等，导致一些原本相等的对象被误判为不相等
+
+## 八、String
+### 8.1 String、StringBuffer、StringBuilder的区别？
+* `String`不可变，`StringBuffer`和`StringBuilder`继承自`AbstractStringBuilder`类，有很多修改字符串的方法
+* `String`对象不可变，线程安全，`StringBuffer`加锁了故线程安全，`StringBuilder`非线程安全，但性能略高
+* 使用：
+  - `String`适合少量数据
+  - `StringBuilder`适合单线程操作
+  - `StringBuffer`适合多线程操作
+ 
+### 8.2 为什么String不可变？
+1. 保存String的数组被`private final`修饰，且`String`类没有提供修改方法
+2. `String`被`final`修饰不可被继承，避免子类破坏
+
+### 8.3 字符串拼接用+还是StringBuilder？
+Java语言仅有的两个重载操作符：面对字符串的`+=`和`+`，`+`操作实际上是调用`StringBuilder`的`append()`方法，但不建议在循环中用，因为每次循环都会创建一个`StringBuilder`对象
+
+### 8.4 字符串常量池了解吗？
+**字符串常量池**是JVM为提升性能针对字符串专门开辟的区域，目的是避免字符串的重复创建
+```
+// 在字符串常量池中创建字符串对象 ”ab“
+// 将字符串对象 ”ab“ 的引用赋值给 aa
+String aa = "ab";
+// 直接返回字符串常量池中字符串对象 ”ab“，赋值给引用 bb
+String bb = "ab";
+System.out.println(aa==bb); // true
+```
+
+### 8.5 String s1 = new String("abc");这句话创建了几个字符串对象？
+#### 常量池中不存在"abc"

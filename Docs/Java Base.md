@@ -330,3 +330,37 @@ System.out.println(aa==bb); // true
 
 ### 8.5 String s1 = new String("abc");这句话创建了几个字符串对象？
 #### 常量池中不存在"abc"
+* 在常量池创建字符串
+* 在堆中创建字符串
+#### 常量池中存在"abc"
+* 在堆中创建对象，并用常量池中"abc"进行初始化
+
+### 8.6 String#intern 方法有什么用？
+调用`intern()`时，若常量池中存在相同内容的字符串，返回常量池中对象引用；否则将其添加到常量池中引用；目的是确保字符串引用在常量池中的唯一性
+
+### 8.7 String#equals() 和 Object#equals() 有何区别？
+String.equals()是被重写过的，比较的是字符串的值是否相等
+
+### 8.8 String 类型的变量和常量做“+”运算时发生了什么？
+
+#### 不加final
+```
+String str1 = "str";
+String str2 = "ing";
+String str3 = "str" + "ing";   // 编译器常量折叠，等价于 String str3 = "string"
+String str4 = str1 + str2;
+String str5 = "string";
+System.out.println(str3 == str4);//false
+System.out.println(str3 == str5);//true
+System.out.println(str4 == str5);//false
+```
+
+#### 加final
+```
+final String str1 = "str";  // 被final修饰的string会被当作常量
+final String str2 = "ing";
+// 下面两个表达式其实是等价的
+String c = "str" + "ing";// 常量池中的对象
+String d = str1 + str2; // 常量池中的对象
+System.out.println(c == d);// true
+```

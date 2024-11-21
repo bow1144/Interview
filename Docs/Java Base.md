@@ -399,4 +399,107 @@ try {
 }
 ```
 
-### 9.6 finally
+### 9.6 finally中的代码一定会执行吗？
+不一定，比如虚拟机关机和CPU关机
+
+### 9.7 异常使用有什么需要注意的地方？
+* 不要把异常定义为静态变量，否则会引起栈信息混乱
+* 抛出信息一定要有意义
+* 异常能是子类就不能是父类
+* 避免重复记录日志
+
+## 十、泛型
+### 10.1 什么是泛型？有什么作用？
+* 泛型允许类、接口、方法在定义时使用类型参数而不是指定具体类型，避免了类型转化异常
+* 作用：类型安全、代码复用性、减少类型转化
+
+### 10.2 泛型的使用方式有哪几种？
+泛型有三种使用方式：**泛型类、泛型接口、泛型方法**  
+
+#### 泛型类
+类似`vector<int> v`  
+```
+//此处T可以随便写为任意标识，常见的如T、E、K、V等形式的参数常用于表示泛型
+//在实例化泛型类时，必须指定T的具体类型
+public class Generic<T>{
+
+    private T key;
+
+    public Generic(T key) {
+        this.key = key;
+    }
+
+    public T getKey(){
+        return key;
+    }
+}
+
+Generic<Integer> genericInteger = new Generic<Integer>(123456);
+```
+
+#### 泛型接口
+```
+public interface Generator<T> {
+    public T method();
+}
+
+// 不指定类型
+class GeneratorImpl<T> implements Generator<T>{
+    @Override
+    public T method() {
+        return null;
+    }
+}
+
+// 指定类型
+class GeneratorImpl implements Generator<String> {
+    @Override
+    public String method() {
+        return "hello";
+    }
+}
+```
+
+#### 泛型方法
+```
+   public static < E > void printArray( E[] inputArray )
+   {
+         for ( E element : inputArray ){
+            System.out.printf( "%s ", element );
+         }
+         System.out.println();
+    }
+
+// 创建不同类型数组：Integer, Double 和 Character
+Integer[] intArray = { 1, 2, 3 };
+String[] stringArray = { "Hello", "World" };
+printArray( intArray  );
+printArray( stringArray  );
+```
+
+### 10.3 项目中哪里用到泛型？
+* 自定义接口通用返回类型
+* 构筑工具集
+
+## 十一、反射
+
+### 11.1 什么是反射？
+反射允许程序运行时查看类、接口、方法、字段的信息；通过反射程序可以动态获取类的信息，还可以自己创建对象、调用方法、修改类的结构
+
+### 11.2 反射的优缺点
+* 优点在于灵活代码、为工具提供了开箱即用的便利
+* 缺点在于增加了安全问题，比如无视泛型参数的安全检查
+
+### 11.3 反射的应用场景？
+* 动态代理
+* 注解
+
+## 十二、注解
+### 12.1 什么是注解？
+一种特殊的注释，修饰类、方法、变量，提供信息在编译运行时使用；注解本质上时继承了`Annotation`的特殊接口
+
+### 12.2 注解的解析方法有哪几种？
+* 编译期直接处理：比如`@Override`，编译时会检测方法是否重写父类对应的方法
+* 运行时通过反射处理：Spring框架的注解都是通过反射处理
+
+## 十三、SPI

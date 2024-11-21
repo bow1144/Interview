@@ -364,3 +364,39 @@ String c = "str" + "ing";// 常量池中的对象
 String d = str1 + str2; // 常量池中的对象
 System.out.println(c == d);// true
 ```
+
+## 九、异常
+
+### 9.1 异常类型
+`Throwable`->`Exception`,`Error`  
+`Exception`->`Checked Exception`,`Uncheaked Exception`
+
+### 9.2 Exception和Error有什么区别？
+* `Exception`是程序可以处理的异常，分为`Checked Exception`（受检查异常，必须处理）和`Uncheaked Exception`（不受检查异常，可以不处理）
+* `Error`是程序无法处理的错误，不建议通过`catch`捕获，错误发生时JVM一般会选择线程终止
+
+### 9.3 Checked Exception 和 Unchecked Exception 有什么区别？
+* 如果受检查异常没有被catch或者throws关键字处理的话，就没办法通过编译
+* 不受检查异常可以通过编译，`RuntimeException`及其子类都是
+
+### 9.4 Throwable类常见的方法有哪些？
+* `String getMessage()` 返回异常发生的详细信息
+* `String toString()`返回简要描述
+* `void printStackTrace()`在控制台上打印`Throwable`对象封装的异常信息
+
+### 9.5 Try-catch-finally如何使用？
+* `try`用于捕获异常，后面可加0或多个`catch`，若没有`catch`则必须跟一个`finally`
+* `catch`用于处理捕获的异常
+* `finally`无论是否有异常，`finally`中的语句都会执行，如果`try/catch`中遇到`return`，`finally`的语句都会被执行；不要在finally中使用return
+```
+try {
+    System.out.println("Try to do something");
+    throw new RuntimeException("RuntimeException");
+} catch (Exception e) {
+    System.out.println("Catch Exception -> " + e.getMessage());
+} finally {
+    System.out.println("Finally");
+}
+```
+
+### 9.6 finally

@@ -598,3 +598,29 @@ I/O流即输入输出。数据输入到计算机内存即输入，从内存到�
 * 线程安全性是指多个线程在并发执行时，数据结构能够正确地维护其状态而不需要外部同步控制
 * Vector、HashTable、Properties是线程安全的；
 * ArrayList、LinkedList、HashSet、TreeSet、HashMap、TreeMap等都是线程不安全的
+
+## 十七、Spring
+
+### 17.1 Spring是什么？
+Spring是一个用于构建大型程序的开源框架，提供了一整套解决方案，简化了开发过程，提升了应用程序的模块化和可维护性
+
+### 17.2 Spring框架的核心概念有哪些？
+* 控制反转Ioc：将对象的创建和管理交给框架，Spring通过**依赖注入**实现Ioc
+* 面向切面编程AOP：允许你将关注点分离，让业务逻辑更加清晰
+* 事务管理：提供了一致的事务管理接口
+* Spring容器
+
+### 17.3 Spring的主要模块有哪些？
+* Spring core：核心，Ioc和依赖注入
+* Spring AOP：提供面向切面编程的支持
+* Spring Data Access/Integration：对数据库的访问
+* Spring MVC：Web模块
+* Spring Security：认证和授权模块
+* Spring Boot：零配置的应用程序，开箱即用的Web服务器
+
+### 17.4 Spring的优势在于什么？
+* 松耦合：依赖注入实现解耦
+* 模块化
+* 平台无关性：对不同技术栈的广泛支持
+* 测试友好：支持单元测试
+* 可扩展性

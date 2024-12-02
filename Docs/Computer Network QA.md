@@ -24,6 +24,16 @@
 
 <img width="577" alt="{5E7899AB-9190-4D3B-B944-675CEB46E7F9}" src="https://github.com/user-attachments/assets/3621a5e0-fdef-4828-9704-91f839b82c64">
 
+### 网络有什么常用的通信协议？
+* HTTP：web浏览器与服务器之间传输超文本的协议，应用层
+* HTTPS：加入SSL/TLS加密，用于安全传输
+* TCP：面向连接的传输层协议，保证数据的完整性
+* UDP：无连接，适用于实时性较高的应用
+* IP：网络层协议
+
+### 前后端交互用什么协议？
+* HTTP和HTTPS协议
+
 ### HTTP请求报文由什么组成？
 1. **请求行**：包含请求方法（`GET`，`POST`等）和`URL`
 2. **请求头**：由`key:value`组成，告知服务器有关请求的详细信息

@@ -173,6 +173,13 @@ int n = i;   //拆箱
 * `Vector`：类似`ArrayList`但是线程安全，性能较差
 * `LinkedList`基于双向链表的列表，适合频繁插入删除的场景
 
+### AVL树和红黑树的区别？
+* AVL树追求完全平衡
+* 红黑树追求弱平衡，树长不超过树短的两倍，插入删除的成本较低
+
+### 红黑树插入的复杂度是多少？
+插入删除查找都是`O(logn)`
+
 ## 四、变量
 
 ### 4.1 成员变量与局部变量的区别？
@@ -680,6 +687,11 @@ I/O流即输入输出。数据输入到计算机内存即输入，从内存到�
 ### Synchronized 和 ReentrantLock 有什么区别？
 * 用法：synchronized 可以用来修饰普通方法、静态方法和代码块，而 ReentrantLock 只能用于代码块。
 * 获取与释放：synchronized 是自动加锁和释放锁的，而 ReentrantLock 需要手动加锁和释放锁。
+
+### Synchrinized 和 locked 的区别？
+* sycronized编码更简单，locked功能更强大灵活
+* Synchrinized不会死锁，locked会死锁
+* 竞争激烈时，locked更加适用
 
 ### 了解volatile吗？
 保证了两个性质：   
